@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven {
+		url = "${repositoryUrl}/libs-release"
+		credentials {
+			username = mavenUsername
+			password = mavenPassword
+		}
+		allowInsecureProtocol = true
+	}
+}
+
+dependencies {
+	// Main
+	implementation "io.resi.central:central-client:1.0.0"
+
+	// Bucket4j
+	implementation "com.bucket4j:bucket4j-core:8.3.0"
+	implementation "com.bucket4j:bucket4j-redis:8.3.0"
+	implementation 'io.lettuce:lettuce-core:6.5.5.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-circuitbreaker-resilience4j:3.2.0'
+
+	implementation platform("org.glassfish.jersey:jersey-bom:3.1.9")
+	implementation "org.glassfish.jersey.connectors:jersey-grizzly-connector"
+	implementation "org.glassfish.jersey.core:jersey-client"
+
+	implementation "io.resi.jakarta-rs-filters:jakarta-rs-filters-client:1.7.27"
+
+	implementation platform("com.fasterxml.jackson:jackson-bom:2.18.2")
+	implementation "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider"
+
+	testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
